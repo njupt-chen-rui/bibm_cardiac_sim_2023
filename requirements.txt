@@ -1,0 +1,4 @@
+numpy
+matplotlib
+vtk
+taichi==1.6.0
