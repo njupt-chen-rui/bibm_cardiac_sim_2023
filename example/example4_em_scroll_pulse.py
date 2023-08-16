@@ -1072,68 +1072,6 @@ def read_data():
     return Body_
 
 
-def experiment5_1():
-    body = read_data()
-    ep_sys = diffusion_reaction(body=body)
-    num_per_tet_set_np = np.array(meshData['sum_tet_set'], dtype=int)
-    dynamics_sys = XPBD_SNH_with_active(body=body, num_pts_np=num_per_tet_set_np)
-    dynamics_sys.is_cal_von_Mises = 0
-
-    open_gui = True
-    # set parameter
-    windowLength = 1024
-    lengthScale = min(windowLength, 512)
-    light_distance = lengthScale / 25.
-
-    if open_gui:
-        # init the window, canvas, scene and camera
-        window = ti.ui.Window("body show", (windowLength, windowLength), vsync=True)
-        canvas = window.get_canvas()
-        scene = ti.ui.Scene()
-        camera = ti.ui.Camera()
-
-        # initial camera position
-        camera.position(-10.50518621, 40.032794, 117.36565294)
-        camera.lookat(-10.47637129, 39.56587387, 116.48182304)
-        camera.up(0., 1., 0.)
-
-        iter_time = 0
-        while window.running:
-            if iter_time == 0:
-                ep_sys.apply_stimulation_s1()
-                iter_time += 1
-            elif iter_time == 290:
-                ep_sys.apply_stimulation_s2_1()
-                iter_time += 1
-            else:
-                iter_time += 1
-
-            ep_sys.update(1)
-            dynamics_sys.update()
-            if dynamics_sys.is_cal_von_Mises == 1:
-                dynamics_sys.cal_von_Mises()
-                body.update_color_von_Mises()
-            else:
-                body.update_color_Vm()
-
-            # set the camera, you can move around by pressing 'wasdeq'
-            camera.track_user_inputs(window, movement_speed=0.2, hold_key=ti.ui.LMB)
-            scene.set_camera(camera)
-
-            # set the light
-            scene.point_light(pos=(-light_distance, 0., light_distance), color=(0.5, 0.5, 0.5))
-            scene.point_light(pos=(light_distance, 0., light_distance), color=(0.5, 0.5, 0.5))
-            scene.ambient_light(color=(0.5, 0.5, 0.5))
-
-            # draw
-            scene.mesh(body.vertex, indices=body.surfaces, two_sided=False, per_vertex_color=ep_sys.body.vert_color)
-            # scene.mesh(body.vertex, indices=body.surfaces, two_sided=False, color=(1.0, 0.5, 0.5))
-
-            # show the frame
-            canvas.scene(scene)
-            window.show()
-
-
 def example_em_scroll_pulse():
     body = read_data()
     ep_sys = diffusion_reaction(body=body)
@@ -1209,7 +1147,7 @@ def get_gif():
 
     open_gui = True
     # set parameter
-    windowLength = 1024
+    windowLength = 512
     lengthScale = min(windowLength, 512)
     light_distance = lengthScale / 25.
 

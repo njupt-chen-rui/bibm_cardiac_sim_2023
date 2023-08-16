@@ -1,5 +1,5 @@
 # bibm_cardiac_sim_2023
-
+![Alt Text](./data/res/example4/electromechanical_couple_scroll_wave.gif)
 ## Requirements
 ```commandline
 python -m pip install -r requirements.txt
@@ -17,5 +17,3 @@ All examples are stored in folder "./example".
 ![image](./data/res/example4/fig5.png)
 ![image](./data/res/example4/fig6.png)
 ![image](./data/res/example4/fig7.png)
-
-![Alt Text](./data/res/example4/electromechanical_couple_scroll_wave.gif)
