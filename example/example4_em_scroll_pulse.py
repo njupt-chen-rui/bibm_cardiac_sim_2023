@@ -1147,7 +1147,7 @@ def get_gif():
 
     open_gui = True
     # set parameter
-    windowLength = 512
+    windowLength = 256
     lengthScale = min(windowLength, 512)
     light_distance = lengthScale / 25.
 
@@ -1193,15 +1193,17 @@ def get_gif():
 
             # show the frame
             canvas.scene(scene)
-            filename = f'../data/res/example4/gif/frame_{iter_time:05d}.png'  # create filename with suffix png
-            # print(f'Frame {iter_time} is recorded in {filename}')
-            window.show()
-            window.save_image(filename)  # export and show in GUI
+            if iter_time % 2 == 0:
+                i = iter_time // 2
+                filename = f'../data/res/example4/gif/frame_{i:05d}.png'  # create filename with suffix png
+                # print(f'Frame {iter_time} is recorded in {filename}')
+                window.show()
+                window.save_image(filename)  # export and show in GUI
 
 
 if __name__ == "__main__":
     ti.init(arch=ti.cuda, default_fp=ti.f32)
 
     # 3D em couple
-    example_em_scroll_pulse()
-    # get_gif()
+    # example_em_scroll_pulse()
+    get_gif()
